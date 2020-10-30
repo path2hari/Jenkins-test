@@ -1,13 +1,4 @@
-credentials:
-  system:
-    domainCredentials:
-    - credentials:
-      - usernamePassword:
-          description: "Github Credentials"
-          id: "githubCred"
-          password: "{AQAAABAAAAAw6Pl7FeIIB9jq3TP+qAf2nrNDXlOvxdoOzxvKmnUYGg7d1qJrAmeairE9/OTJEZ589bseiuznqjT5YKSgF6EAaA==}"
-          scope: GLOBAL
-          username: "elemicatms"
+
 jenkins:
   agentProtocols:
   - "JNLP4-connect"
