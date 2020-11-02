@@ -1,99 +1,14 @@
 
 jenkins:
-  authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
-  securityRealm:
-    legacy
-  disableRememberMe: false
-  remotingSecurity:
-    enabled: true
-  mode: NORMAL
-  numExecutors: 0
-  projectNamingStrategy: "standard"
-  markupFormatter:
-    plainText
-  clouds:
-  - kubernetes:
-      containerCapStr: "10"
-      defaultsProviderTemplate: ""
-      connectTimeout: "5"
-      readTimeout: "15"
-      jenkinsUrl: "http://etms-test-jenkins:8080"
-      jenkinsTunnel: "etms-test-jenkins-agent:50000"
-      maxRequestsPerHostStr: "32"
-      name: "kubernetes"
-      namespace: "jenkins-test"
-      serverUrl: "https://kubernetes.default"
-      podLabels:
-      - key: "jenkins/etms-test-jenkins-jenkins-slave"
-        value: "true"
-      templates:
-        - name: "default"
-          containers:
-          - name: "jnlp"
-            alwaysPullImage: false
-            args: "^${computer.jnlpmac} ^${computer.name}"
-            envVars:
-              - envVar:
-                  key: "JENKINS_URL"
-                  value: "http://etms-test-jenkins.jenkins-test.svc.cluster.local:8080/"
-            image: "jenkins/inbound-agent:4.3-4"
-            privileged: "false"
-            resourceLimitCpu: 512m
-            resourceLimitMemory: 512Mi
-            resourceRequestCpu: 512m
-            resourceRequestMemory: 512Mi
-            runAsUser: 
-            runAsGroup: 
-            ttyEnabled: false
-            workingDir: /home/jenkins
-          idleMinutes: 0
-          instanceCap: 2147483647
-          label: "etms-test-jenkins-jenkins-slave "
-          nodeUsageMode: "NORMAL"
-          podRetention: Never
-          showRawYaml: true
-          serviceAccount: "default"
-          slaveConnectTimeoutStr: "100"
-          yamlMergeStrategy: override
-        - name: "ansible"
-          containers:
-          - name: "ansible"
-            alwaysPullImage: false
-            args: "^${computer.jnlpmac} ^${computer.name}"
-            envVars:
-              - envVar:
-                  key: "JENKINS_URL"
-                  value: "http://etms-test-jenkins.jenkins-test.svc.cluster.local:8080/"
-            image: "599356022964.dkr.ecr.eu-west-1.amazonaws.com/ansible:v7-root"
-            privileged: "false"
-            resourceLimitCpu: 512m
-            resourceLimitMemory: 512Mi
-            resourceRequestCpu: 512m
-            resourceRequestMemory: 512Mi
-            runAsUser: 
-            runAsGroup: 
-            ttyEnabled: false
-            workingDir: /root
-          idleMinutes: 0
-          instanceCap:
-          label: "etms-test-ansible-jenkins-slave "
-          nodeUsageMode: "NORMAL"
-          podRetention: Never
-          showRawYaml: true
-          serviceAccount: "default"
-          slaveConnectTimeoutStr: "100"
-          yamlMergeStrategy: override
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: true
-security:
-  apiToken:
-    creationOfLegacyTokenEnabled: false
-    tokenGenerationOnCreationEnabled: false
-    usageStatisticsEnabled: true
-unclassified:
-  location:
-    adminAddress: 
-    url: http://etms-test-jenkins:8080
+  systemMessage: "Controlled by Configuration as Code"
+jobs:
+  - script: >
+     multibranchPipelineJob('configuration-as-code') {
+          branchSources {
+              git {
+                  id = 'configuration-as-code'
+                  remote('https://github.com/jenkinsci/configuration-as-code-plugin.git')
+              }
+          }
+      }
+  - url: https://raw.githubusercontent.com/kedark3/jcasc-example/master/seed.groovy
