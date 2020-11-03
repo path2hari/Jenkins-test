@@ -6,13 +6,13 @@ credentials:
       - usernamePassword:
           description: "Github Credentials"
           id: "githubCred"
-          password: "{AQAAABAAAAAwUKg0yYoE6Cw6RYZ64y5Kces4qGlOORlMj0NTLP0hXrHlf4XAiuh2ZM1S3jAX8U/P3rRXawMa1v+1osph/BUomw==}"
+          password: "{testtestrHlf4XAiuh2ZM1Stesttest}"
           scope: GLOBAL
-          username: "elemicatms"
+          username: "eega"
 jenkins:
   systemMessage: "Controlled by Configuration as Code"
   clouds:
-    - docker:
+    - kubernetes:
         name: "docker"
         dockerApi:
           dockerHost:
