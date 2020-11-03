@@ -18,3 +18,8 @@ jenkins:
       clientID: "someId"
       clientSecret: "${GITHUB_SECRET}"
       oauthScopes: "read:org,user:email"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
