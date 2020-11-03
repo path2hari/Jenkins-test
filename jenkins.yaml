@@ -2,7 +2,7 @@
 jenkins:
   systemMessage: "Controlled by Configuration as Code"
   clouds:
-    - docker:
+    - kubernetes:
         name: "docker"
         dockerApi:
           dockerHost:
