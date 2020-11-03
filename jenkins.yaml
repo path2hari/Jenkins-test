@@ -11,27 +11,10 @@ credentials:
           username: "eega"
 jenkins:
   systemMessage: "Controlled by Configuration as Code"
-  clouds:
-    - kubernetes:
-        name: "docker"
-        dockerApi:
-          dockerHost:
-            uri: "unix:///var/run/docker.sock"
-        templates:
-          - labelString: "docker-agent"
-            dockerTemplateBase:
-              # TODO: pin sha256 or versions when using in production
-              image: "jenkins/agent"
-              volumes:
-                - hello:/hello
-                - world:/world
-              environmentsString: |
-                hello=world
-                foo=bar
-            remoteFs: "/home/jenkins/agent"
-            connector:
-              attach:
-                user: "jenkins"
-            instanceCapStr: "10"
-            retentionStrategy:
-              idleMinutes: 1
+  securityRealm:
+    github:
+      githubWebUri: "https://github.com"
+      githubApiUri: "https://api.github.com"
+      clientID: "someId"
+      clientSecret: "${GITHUB_SECRET}"
+      oauthScopes: "read:org,user:email"
