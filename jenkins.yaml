@@ -11,13 +11,6 @@ credentials:
           username: "eega"
 jenkins:
   systemMessage: "Controlled by Configuration as Code"
-  securityRealm:
-    github:
-      githubWebUri: "https://github.com"
-      githubApiUri: "https://api.github.com"
-      clientID: "someId"
-      clientSecret: "${GITHUB_SECRET}"
-      oauthScopes: "read:org,user:email"
 tool:
   git:
     installations:
