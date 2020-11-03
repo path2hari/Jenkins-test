@@ -25,6 +25,23 @@ jenkins:
             maxRequestsPerHostStr: 64
             retentionTimeout: 5
             templates:
+              - name: "ansiblePod"
+                namespace: "jenkins-test"
+                label: "deployPod"
+                nodeUsageMode: EXCLUSIVE
+                containers:
+                  - name: "ansible"
+                    image: "599356022964.dkr.ecr.eu-west-1.amazonaws.com/ansible:v7-root"
+                    alwaysPullImage: true
+                    workingDir: "/root"
+                    ttyEnabled: true
+                    resourceRequestCpu: "500m"
+                    resourceLimitCpu: "1000m"
+                    resourceRequestMemory: "1Gi"
+                    resourceLimitMemory: "2Gi"
+                idleMinutes: "1"
+                activeDeadlineSeconds: "120"
+                slaveConnectTimeout: "1000"
               - name: "k8s-agent"
                 namespace: "jenkins-test"
                 label: "k8sPod"
