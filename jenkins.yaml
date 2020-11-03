@@ -11,6 +11,41 @@ credentials:
           username: "eega"
 jenkins:
   systemMessage: "Controlled by Configuration as Code"
+  clouds:
+        - kubernetes:
+            name: "k8s-config"
+            serverUrl: "https://kubernetes.default"
+            skipTlsVerify: true
+            namespace: "jenkins-test"
+            jenkinsUrl: "http://etms-test-jenkins:8080"
+            jenkinsTunnel: "etms-test-jenkins-agent:50000"
+            connectTimeout: 0
+            readTimeout: 0
+            containerCapStr: 100
+            maxRequestsPerHostStr: 64
+            retentionTimeout: 5
+            templates:
+              - name: "k8s-agent"
+                namespace: "jenkins-test"
+                label: "k8sPod"
+                nodeUsageMode: EXCLUSIVE
+                containers:
+                  - name: "jnlp"
+                    image: "jenkins/inbound-agent:latest"
+                    alwaysPullImage: true
+                    workingDir: "/home/jenkins"
+                    ttyEnabled: true
+                    resourceRequestCpu: "500m"
+                    resourceLimitCpu: "1000m"
+                    resourceRequestMemory: "1Gi"
+                    resourceLimitMemory: "2Gi"
+                volumes:
+                  - emptyDirVolume:
+                      memory: false
+                      mountPath: "/tmp"
+                idleMinutes: "1"
+                activeDeadlineSeconds: "120"
+                slaveConnectTimeout: "1000"
 tool:
   git:
     installations:
